@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script type="text/javascript" src="Scripts/jquery-3.3.1.js"></script>
+    <script src="Scripts/Tools/AngularJS _v1.7.6.js"></script>
+    <script src="Scripts/Tools/Lodash.js"></script>
+    <script src="Scripts/Tools/Tools_var.js"></script>
+    <link href="Scripts/Tools/layer-v3.1.1/layer/theme/default/layer.css" rel="stylesheet" />
+    <script src="Scripts/Tools/layer-v3.1.1/layer/layer.js"></script>
+    <script type="text/javascript">
+        function Save() {
+            $.ajax({
+                type: "post",
+                url: "/Home/ProduceModel",
+                cache: false,
+                data: {},
+                dataType: "json",
+                success: function (data) {
+                    //console.log(data);
+                    //$("#aa").html(data);
+                    if (data == 200) {
+                        layer.msg("生成成功！");
+                    } else {
+                        layer.msg("生成失败！");
+                    }
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <button onclick="Save()">生成Model</button>
+    </div>
+</body>
+</html>

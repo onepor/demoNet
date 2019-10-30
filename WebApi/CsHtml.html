@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="Js/jquery-1.10.2.js"></script>
+    <script>
+        function QueryData() {
+
+            $.ajax({
+                url: "api/Security/token?userId=20190705&Name=王鹏&UserTel=17338321062&roles=Admin",//"api/Values/CsWebApiLog"
+                type: "get",
+                dataType: 'text',
+                data: null,
+                success: function (result) {
+                    alert(result);
+                }
+            });
+        }
+        function QueryData2() {
+
+            $.ajax({
+                url: "api/Security/GetUserInfoFromToken",//"api/Values/CsWebApiLog"
+                type: "get",
+                dataType: 'text',
+                data: null,
+                beforeSend: function (request) {//eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiIyMDE5MDcwNSIsIk5hbWUiOiLnjovpuY8iLCJVc2VyVGVsIjoiMTczMzgzMjEwNjIiLCJSb2xlcyI6IkFkbWluIiwiZXhwIjoxNTcyNDU1MDkxLjB9.gZmoDpRU2fr2lyp55esVvvwbz4_Fv0-ppYBjP6iHBLo
+                     request.setRequestHeader("token", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiIyMDE5MDcwNSIsIk5hbWUiOiLnjovpuY8iLCJVc2VyVGVsIjoiMTczMzgzMjEwNjIiLCJyb2xlcyI6IkFkbWluIiwiZXhwIjoxNTcyNDU2NDUwLjB9.va3nwqtRHWcQbq62Mf22jKt17oIK4hKOAM72kaNDURw");
+                },
+                success: function (result) {
+                    alert(result);
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <div style="text-align:center;"><input style="margin-top:20px;" type="button" onclick="QueryData()" value="测试按钮" /></div>
+    <div style="text-align:center;"><input style="margin-top:20px;" type="button" onclick="QueryData2()" value="测试按钮" /></div>
+</body>
+</html>

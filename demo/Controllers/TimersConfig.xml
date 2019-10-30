@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Timer>
+  <!--指示 Timer 是否应只引发一次 Elapsed 事件（(false) 或重复 (true)-->
+  <AutoReset>1</AutoReset>
+  <!--获取或设置一个值，该值指示 Timer 是否应引发 Elapsed 事件-->
+  <Enabled>0</Enabled>
+  <!--设置引发 Elapsed 事件的间隔（以毫秒为单位）-->
+  <Interval>1000</Interval>
+  <!--是否启用定时器-->
+  <Start>1</Start>
+  <!--是否暂停定时器-->
+  <Suspend>0</Suspend>
+</Timer>

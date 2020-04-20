@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="ConfigureXML.cs" />
     <Compile Include="Global.cs" />
+    <Compile Include="LeetCode_0002.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TimerJob.cs" />

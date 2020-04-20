@@ -1,0 +1,237 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!--<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">-->
+    <title></title>
+    <meta charset="utf-8" />
+    <script src="jquery-3.3.1.min.js"></script>
+</head>
+<body>
+    <fieldset>
+        <legend>身份验证</legend>
+        <form>
+            <label for="UserName">用户名:</label><input type="text" name="userName" id="userName" value="admin" />
+            <br />
+            <br />
+            <label for="Password">密码:</label><input type="password" name="password" id="password" value="123" />
+            <br />
+            <br />
+        </form>
+        <button id="login">登录（获取token值）</button>
+        <button type="button" onclick="getOrderStatus()" >测试</button>
+    </fieldset>
+    <br />
+
+    <fieldset>
+        <legend>调用接口</legend>
+        <button id="invoke">调用接口</button>
+    </fieldset>
+    <br />
+
+    <fieldset>
+        <legend>支付测试</legend>
+
+        <label>Z渠道：</label>
+        <button type="button" id="BtnPay">支付测试</button>
+
+        <br />
+
+        <label>善付：</label>
+        <br />
+        <label for="sex">支付方式:</label>
+        <select id="paytype">
+            <option value="2" code="WECHAT" selected>微信扫码</option>
+            <option value="3" code="ALIPAY">支付宝扫码</option>
+            <option value="31" code="ALIPAY_H5">支付宝H5原生</option>
+        </select>
+
+        <br />
+
+        <input type="text" id="money" value="200" />
+        <button type="button" id="BtnPay2">确定支付测试</button>
+
+        <br />
+
+
+    </fieldset>
+
+    <script>
+        $(function () {
+            //调用api站点的登录接口,接口在登录成功后返回一个token。
+            $("#login").on("click", function () {
+                var obj = new Object();
+                //obj.userName = "wp";
+                //obj.password = "123456";
+                obj.account = "58qp123";
+                obj.password = "aa123456";
+                obj.site = "bar";
+
+                $.ajax({
+                    url: "https://localhost:44355/api/Security/GetToken",
+                    //url: "https://api.58poker.net/v1/auth/login",
+                    data: JSON.stringify(obj),//$("form").serialize(),
+                    method: "post",
+                    contentType: "application/json",  //推荐写这个
+                    success: function (data) {
+                        //console.log(data);
+                        if (data.Success) {
+                            //为简单起见，将token保存在全局变量中。
+                            window.token = data.Token;
+                            alert("登录成功");
+                        } else {
+                            alert("登录失败:" + data.Message);
+                        }
+                    }
+                });
+            });
+
+            //调用api站点的获取数据的接口，该接口要求身份验证。
+            $("#invoke").on("click", function () {
+                console.log(window.token);
+                
+                var obj = new Object();
+                obj.account = "58qp123";
+                obj.password = "aa123456";
+
+                $.ajax({
+                    url: "http://www.zoaosoft.com:8001/Game/PokerLoginApi?account=58qp123&password=aa123456",
+                    method: "post",
+                    contentType: "application/json",  //推荐写这个
+                    headers: { "auth": window.token },//通过请求头来发送token，放弃了通过cookie的发送方式
+                    data: JSON.stringify(obj),
+                    complete: function (jqXHR,textStatus) {
+                        alert(jqXHR.responseText);
+                    },
+
+                });
+            });
+
+
+
+            $("#BtnPay").on("click", function () {
+                var obj = new Object();
+                obj.PayType = "alipay";
+                obj.UserId = "wp";
+                obj.Amount = "10";
+
+                $.ajax({
+                    //url: "https://rocking.ink:8891/Pay/ZPayRequest",
+                    url: "https://localhost:44355/Pay/ZPayRequest",//?PayType=alipay&UserId=wp&Amount=20
+                    method: "post",
+                    headers: { "auth": window.token },//通过请求头来发送token，放弃了通过cookie的发送方式
+                    contentType: "application/json",  //推荐写这个
+                    dataType: "json",
+                    //"PayType=alipay&UserId=wp&Amount=20",//
+                    data: JSON.stringify(obj),//JSON.stringify({ PayType: "alipay", UserId: "wp", Amount: "20" }),
+                    //success:function(retData) {
+                    //    alert(retData);
+                    //},
+                    complete: function (jqXHR, textStatus) {
+                        console.log(textStatus);
+                        console.log(jqXHR.responseText);
+                        //alert(jqXHR.responseText);
+                    }
+                });
+            });
+
+            
+
+            $("#BtnPay2").on("click", function () {
+                var obj = new Object();
+                ////微信扫码  单笔限额 350-8000---------二维码显示不出来
+                obj.PayType = "2";
+                obj.PayTypeCode = "WECHAT";
+                //支付宝扫码 单笔限额 200-10000---------二维码显示不出来
+                //obj.PayType = "3";
+                //obj.PayTypeCode = "ALIPAY";
+                ////支付宝H5原生，单笔限额 100-5000   -----OK
+                //obj.PayType = "31";
+                //obj.PayTypeCode = "ALIPAY_H5";
+                ////支付宝转卡，单笔限额 100-10000   ----不能显示
+                //obj.PayType = "301";
+                //obj.PayTypeCode = "ALIPAY_TO_BANK";
+                ////云闪付，单笔限额 50-5000    --显示正在加载中
+                //obj.PayType = "7";
+                //obj.PayTypeCode = "UNION";
+                ////网银，单笔限额 1-20000      --不能显示
+                //obj.PayType = "1";
+                //obj.PayTypeCode = "BANK";
+
+                obj.PayType = $("#paytype").val();
+                obj.PayTypeCode = $("#paytype option:selected").attr("code");
+                obj.Money = $("#money").val();
+
+                $.ajax({
+                    //url: "https://rocking.ink:8891/Pay/GoodPayRequest",
+                    url: "https://localhost:44355/Pay/GoodPayRequest",
+                    method: "post",
+                    headers: { "auth": window.token },//通过请求头来发送token，放弃了通过cookie的发送方式
+                    contentType: "application/json",  //推荐写这个
+                    dataType: "json",
+                    //"PayType=alipay&UserId=wp&Amount=20",//
+                    data: JSON.stringify(obj),//JSON.stringify({ PayType: "alipay", UserId: "wp", Amount: "20" }),
+                    //success:function(retData) {
+                    //    alert(retData);
+                    //},
+                    complete: function (jqXHR, textStatus) {
+                        console.log(textStatus);
+                        console.log(jqXHR.responseText);
+                        //alert(jqXHR.responseText);
+                    }
+                });
+            });
+        });
+
+
+
+        $(function () {
+            var str = window.location.search;
+
+            if (str.indexOf(name) != -1) {
+                var pos_start = str.indexOf(name) + name.length + 1;
+                var pos_end = str.indexOf("&", pos_start);
+                if (pos_end == -1) {
+                    alert(str.substring(pos_start));
+                } else {
+                    alert("对不起这个值不存在！");
+                }
+            }
+        });
+
+        // 检查是否支付完成
+    function getOrderStatus() {
+        $.ajax({
+            type: 'get',
+            dataType: 'json',
+            url: 'https://pay.felicoz.cn/Pay/Status',
+            timeout: 10000, //ajax请求超时时间10s
+            data: {
+                type: 1,
+                tradeNo: '2019121310183987707',
+                key: 'd1ed3229c67c85ebec8cf91631f5729e'
+            },
+            success: function (data) {
+                //从服务器得到数据，显示数据并继续查询
+                console.log(data);
+                if (data['status'] === 1) {
+                    layer.msg('支付成功，正在跳转中...', {icon: 16, shade: 0.01, time: 15000});
+                    setTimeout(window.location.href = data['url'], 1000);
+                } else {
+                    //setTimeout('getOrderStatus()', 4000);
+                }
+            },
+            //Ajax请求超时，继续查询
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                if (textStatus === 'timeout') {
+                    //setTimeout('getOrderStatus()', 1000);
+                } else { //异常
+                    //setTimeout('getOrderStatus()', 4000);
+                }
+            }
+        });
+    }
+
+    </script>
+</body>
+</html>

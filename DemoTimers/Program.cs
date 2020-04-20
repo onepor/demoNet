@@ -12,38 +12,38 @@ namespace DemoTimers
         private static System.Timers.Timer aTimer;
         static string timerXmlUrl = @"C:\Users\Administrator\Desktop\demo\DemoTimers\TimersConfig.xml";
         private static bool IsTimerOn = true;
-        static void Main(string[] args)
-        {
-            //TimerModel timerModel = ConfigureXML.GetValueByCode(timerXmlUrl);
-            ////实例化Timer类，设置间隔时间为10000毫秒；
-            //aTimer = new System.Timers.Timer(10000);
+        //static void Main(string[] args)
+        //{
+        //    //TimerModel timerModel = ConfigureXML.GetValueByCode(timerXmlUrl);
+        //    ////实例化Timer类，设置间隔时间为10000毫秒；
+        //    //aTimer = new System.Timers.Timer(10000);
 
-            ////注册计时器的事件
-            //aTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
+        //    ////注册计时器的事件
+        //    //aTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
 
-            ////设置时间间隔为2秒（2000毫秒），覆盖构造函数设置的间隔
-            ////小时转换（60 * 60 * 1000）
-            //aTimer.Interval = timerModel.Hour * 1000;
+        //    ////设置时间间隔为2秒（2000毫秒），覆盖构造函数设置的间隔
+        //    ////小时转换（60 * 60 * 1000）
+        //    //aTimer.Interval = timerModel.Hour * 1000;
 
-            ////设置是执行一次（false）还是一直执行(true)，默认为true
-            //aTimer.AutoReset = true;
+        //    ////设置是执行一次（false）还是一直执行(true)，默认为true
+        //    //aTimer.AutoReset = true;
 
-            ////开始计时
-            //aTimer.Enabled = true;
-            //TimerJob job = new TimerJob();
-            //job.Start();
+        //    ////开始计时
+        //    //aTimer.Enabled = true;
+        //    //TimerJob job = new TimerJob();
+        //    //job.Start();
 
-            DateTime NowTimes = DateTime.Now;
+        //    //DateTime NowTimes = DateTime.Now;
 
-            funSetTimer();
+        //    //funSetTimer();
 
-            System.Threading.Timer timer = new System.Threading.Timer(start => { 
-            
-            },null, 0, 86400000);
+        //    //System.Threading.Timer timer = new System.Threading.Timer(start => { 
 
-            Console.WriteLine("按任意键退出程序。");
-            Console.ReadLine();
-        }
+        //    //},null, 0, 86400000);
+
+        //    Console.WriteLine("按任意键退出程序。");
+        //    Console.ReadLine();
+        //}
 
         //指定Timer触发的事件
         private static void OnTimedEvent(object source, ElapsedEventArgs e)
@@ -119,5 +119,6 @@ namespace DemoTimers
             Console.WriteLine(asd);
 
         }
+
     }
 }

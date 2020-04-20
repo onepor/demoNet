@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <!--<script src="jquery.js"></script>-->
+    <script src="jquery-3.3.1.min.js"></script>
+    <!--<script src="https://csistage.playngonetwork.com/casino/js?div=pngCasinoGame&gid=firejoker&lang=zh_CN&pid=495&username=29-283Y321J120J457E&practice=1&width=100%&height=100%" type="text/javascript"></script>-->
+    <script type="text/javascript">
+
+        $(function () {
+            var str = window.location.search;
+            var gid_s = "";//firejoker  jquery-3.3.1.min
+
+            if (str.indexOf("gid") != -1) {
+                var pos_start = str.indexOf("gid") + "gid".length + 1;
+                var pos_end = str.indexOf("&", pos_start);
+                if (pos_end != -1) {
+                    gid_s = str.substring(pos_start, pos_end);
+                }
+            }
+
+            var username_s = "";//29-283Y321J120J457E
+            if (str.indexOf("username") != -1) {
+                var pos_start = str.indexOf("username") + "username".length + 1;
+                var pos_end = str.indexOf("&", pos_start);
+                if (pos_end != -1) {
+                    username_s = str.substring(pos_start, pos_end);
+                }
+            }
+
+            var practice_s = "";//1
+            if (str.indexOf("practice") != -1) {
+                var pos_start = str.indexOf("practice") + "practice".length + 1;
+                var pos_end = str.indexOf("&", pos_start);
+                if (pos_end != -1) {
+                    practice_s = str.substring(pos_start, pos_end);
+                }
+            }
+
+            //$.getScript("https://csistage.playngonetwork.com/casino/js?div=pngCasinoGame&gid=" + gid_s + "&lang=zh_CN&pid=495&username=" + username_s + "&practice=" + practice_s + "&width=100%&height=100%");
+
+            createScript("https://csistage.playngonetwork.com/casino/js?div=pngCasinoGame&gid=" + gid_s + "&lang=zh_CN&pid=495&username=" + username_s + "&practice=" + practice_s + "&width=100%&height=100%", function () {
+                console.log('OK');
+            });
+
+        });
+
+        function playforreal() {
+            window.location = 'https://csistage.playngonetwork.com/casino/js?pid=495&gid=firejoker&lang=zh_cn&username=29-283Y321J120J457E&practice=1&width=100%&height=100%';
+        }
+        function logout() {
+            window.close();
+        }
+        function reloadgame(gameid, user) {
+            window.location="https://csistage.playngonetwork.com/casino/js?gid=firejoker&lang=en_GB&pid=1&username=123-hxa94-az6134d&practice=1&width=1024px&height=768px";
+        }
+
+
+        // ��̬����script��ǩ
+        function createScript(url, callback) {
+            var oScript = document.createElement('script');
+            oScript.type = 'text/javascript';
+            oScript.async = true;
+            oScript.src = url;
+            /*
+            ** script��ǩ��onload��onreadystatechange�¼�
+            ** IE6/7/8֧��onreadystatechange�¼�
+            ** IE9/10֧��onreadystatechange��onload�¼�
+            ** Firefox/Chrome/Opera֧��onload�¼�
+            */
+            // �ж�IE8�����������
+            var isIE = !-[1,];
+            if (isIE) {
+                alert('IE')
+                oScript.onreadystatechange = function () {
+                    if (this.readyState == 'loaded' || this.readyState == 'complete') {
+                        callback();
+                    }
+                }
+            } else {
+                // IE9�������������Firefox��Chrome��Opera
+                oScript.onload = function () {
+                    callback();
+                }
+            }
+            document.body.appendChild(oScript);
+        }
+
+    </script>
+</head>
+<body>
+    <div id="pngCasinoGame">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; One moment please!
+        <!--You either have JavaScript turned off or an old version
+    of <a target="_blank"
+          href="http://get.adobe.com/Flashplayer/">
+        Adobe's Flash
+        Player
+    </a>-->
+    </div>
+</body>
+</html>
+

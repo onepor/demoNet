@@ -1,0 +1,30 @@
+﻿<Window x:Class="WpfAppDemo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfAppDemo"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        
+        <!--<Grid.ColumnDefinitions>
+            <ColumnDefinition Width="44*" />
+            <ColumnDefinition Width="141*" />
+            <ColumnDefinition Width="218*" />
+            <ColumnDefinition Width="122*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="62*" />
+            <RowDefinition Height="70*" />
+            <RowDefinition Height="102*" />
+            <RowDefinition Height="116*" />
+        </Grid.RowDefinitions>-->
+
+        <Button Grid.Row="0" Grid.Column="1" Content="开始" HorizontalAlignment="Left" Margin="350,125,0,0" VerticalAlignment="Top" Width="75" Height="23" Click="Button_Click_1" />
+        <Label Content="2019" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3" HorizontalAlignment="Left" Margin="354,188,0,0" VerticalAlignment="Top" Background="#FF20C518" Name="Label_OtherResult" />
+        <Label Content="2019" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3" HorizontalAlignment="Left" Margin="354,218,0,0" VerticalAlignment="Top" Name="Label_Result" Background="#FF1466C7" />
+
+    </Grid>
+</Window>
